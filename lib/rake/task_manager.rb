@@ -102,7 +102,7 @@ module Rake
     #
     # The patterns recognized by this argument resolving function are:
     #
-    #   task :t => [:d]
+    #   task t: [:d]
     #   task :t, [a] => [:d]
     #
     def resolve_args_with_dependencies(args, hash) # :nodoc:

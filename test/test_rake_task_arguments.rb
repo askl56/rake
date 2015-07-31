@@ -16,7 +16,7 @@ class TestRakeTaskArguments < Rake::TestCase
 
   def test_multiple_values_in_args
     ta = Rake::TaskArguments.new([:a, :b, :c], [:one, :two, :three])
-    assert_equal({:a => :one, :b => :two, :c => :three}, ta.to_hash)
+    assert_equal({a: :one, b: :two, c: :three}, ta.to_hash)
   end
 
   def test_has_key
@@ -66,7 +66,7 @@ class TestRakeTaskArguments < Rake::TestCase
   def test_creating_new_argument_scopes
     parent = Rake::TaskArguments.new(['p'], [1])
     child = parent.new_scope(['c', 'p'])
-    assert_equal({:p=>1}, child.to_hash)
+    assert_equal({p:1}, child.to_hash)
     assert_equal 1, child.p
     assert_equal 1, child["p"]
     assert_equal 1, child[:p]
@@ -81,7 +81,7 @@ class TestRakeTaskArguments < Rake::TestCase
 
   def test_default_arguments_values_can_be_merged
     ta = Rake::TaskArguments.new(["aa", "bb"], [nil, "original_val"])
-    ta.with_defaults({ :aa => 'default_val' })
+    ta.with_defaults({ aa: 'default_val' })
     assert_equal 'default_val', ta[:aa]
     assert_equal 'original_val', ta[:bb]
   end

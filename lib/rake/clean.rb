@@ -71,6 +71,6 @@ end
 CLOBBER = ::Rake::FileList.new
 
 desc "Remove any generated file."
-task :clobber => [:clean] do
+task clobber: [:clean] do
   Rake::Cleaner.cleanup_files(CLOBBER)
 end

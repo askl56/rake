@@ -8,7 +8,7 @@ TOP_LEVEL_CONSTANT = 0
 def a_top_level_function
 end
 
-task :default => [:work, :obj, :const]
+task default: [:work, :obj, :const]
 
 task :work do
   begin
@@ -53,7 +53,7 @@ end
 
   def rakefile_chains
     rakefile <<-DEFAULT
-task :default => "play.app"
+task default: "play.app"
 
 file "play.scpt" => "base" do |t|
   cp t.prerequisites.first, t.name
@@ -102,7 +102,7 @@ task :default do
   puts "DEFAULT"
 end
 
-task :other => [:default] do
+task other: [:default] do
   puts "OTHER"
 end
 
@@ -116,13 +116,13 @@ end
 
   def rakefile_dryrun
     rakefile <<-DRYRUN
-task :default => ["temp_main"]
+task default: ["temp_main"]
 
 file "temp_main" => [:all_apps]  do touch "temp_main" end
 
-task :all_apps => [:one, :two]
-task :one => ["temp_one"]
-task :two => ["temp_two"]
+task all_apps: [:one, :two]
+task one: ["temp_one"]
+task two: ["temp_two"]
 
 file "temp_one" do |t|
   touch "temp_one"
@@ -165,7 +165,7 @@ end
     rakefile <<-'FILE_CREATION'
 N = 2
 
-task :default => :run
+task default: :run
 
 BUILD_DIR = 'build'
 task :clean do
@@ -183,10 +183,10 @@ FileList['src/*'].each do |src|
   file target => [src, TARGET_DIR] do
     cp src, target
   end
-  task :run => target
+  task run: target
 end
 
-task :prep => :clean do
+task prep: :clean do
   mkdir_p 'src'
   N.times do |n|
     touch "src/foo#{n}"
@@ -283,7 +283,7 @@ namespace "nest" do
   task :copy do
     puts "NEST COPY"
   end
-  task :xx => :copy
+  task xx: :copy
 end
 
 anon_ns = namespace do
@@ -294,7 +294,7 @@ anon_ns = namespace do
 end
 
 desc "Top level task to run the anonymous version of copy"
-task :anon => anon_ns[:copy]
+task anon: anon_ns[:copy]
 
 namespace "very" do
   namespace "nested" do
@@ -398,11 +398,11 @@ task :inline_verbose_default do
 end
 
 task :inline_verbose_false do
-  sh "#{RUBY} -e '0'", :verbose => false
+  sh "#{RUBY} -e '0'", verbose: false
 end
 
 task :inline_verbose_true do
-  sh "#{RUBY} -e '0'", :verbose => true
+  sh "#{RUBY} -e '0'", verbose: true
 end
 
 task :block_verbose_true do
@@ -436,7 +436,7 @@ task :test do
   Rake::Task[:b].invoke
 end
 
-task :default => :test
+task default: :test
     TEST_SIGNAL
     open 'a_test.rb', 'w' do |io|
       io << 'puts "ATEST"' << "\n"
@@ -453,7 +453,7 @@ task :default => :test
     rakefile <<-TEST_TASK
 require 'rake/testtask'
 
-task :default => :test
+task default: :test
 Rake::TestTask.new(:test) do |t|
   t.test_files = ['a_test.rb']
 end
